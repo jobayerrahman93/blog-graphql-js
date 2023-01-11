@@ -1,5 +1,21 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
+import mongoose from 'mongoose';
+import { mongo_uri } from './config.js';
+
+
+
+
+// mongoose connection start
+
+mongoose.connect(mongo_uri);
+  
+  mongoose.connection.on("connected",()=>{
+    console.log('Database connected')
+  });
+  mongoose.connection.on("error",(err)=>{
+    console.log("Connection failed",err);
+  });
 
 const typeDefs = `
   type Book {
