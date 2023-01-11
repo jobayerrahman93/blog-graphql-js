@@ -7,7 +7,6 @@ import { mongo_uri } from './config.js';
 
 
 // mongoose connection start
-
 mongoose.connect(mongo_uri);
   
   mongoose.connection.on("connected",()=>{
