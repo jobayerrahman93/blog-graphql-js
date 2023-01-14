@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 import { resolvers as authResolver } from './src/graphql/resolvers/authResolver.js';
 import { resolvers as userResolvers } from './src/graphql/resolvers/userResolver.js';
 import { typeDefs as authTypes } from './src/graphql/schema/authSchema.js';
+import { typeDefs as quoteTypes } from './src/graphql/schema/quoteSchema.js';
 import { typeDefs as userTypes } from './src/graphql/schema/userSchema.js';
 dotenv.config().config;
 console.log(process.env.MONGO_URI);
@@ -26,7 +27,7 @@ mongoose.connect(process.env.mongo_uri);
 
 
   const schema = makeExecutableSchema({
-    typeDefs:[authTypes,userTypes],
+    typeDefs:[authTypes,userTypes,quoteTypes],
     resolvers:lodash.merge(userResolvers,authResolver),
   });
   
