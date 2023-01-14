@@ -2,14 +2,17 @@ import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import * as dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
 import lodash from 'lodash';
 import mongoose from 'mongoose';
 import { resolvers as authResolver } from './src/graphql/resolvers/authResolver.js';
+import { resolvers as quoteResolver } from './src/graphql/resolvers/QuoteResolver.js';
 import { resolvers as userResolvers } from './src/graphql/resolvers/userResolver.js';
 import { typeDefs as authTypes } from './src/graphql/schema/authSchema.js';
 import { typeDefs as quoteTypes } from './src/graphql/schema/quoteSchema.js';
 import { typeDefs as userTypes } from './src/graphql/schema/userSchema.js';
 dotenv.config().config;
+
 console.log(process.env.MONGO_URI);
 
 // mongoose connection start
@@ -33,7 +36,7 @@ const context = ({ req, res }) => {
   console.log(authorization);
 
   if(authorization){
-    const {userId} = jwt.verify(authorization,JWT_SECRET);
+    const {userId} = jwt.verify(authorization,process.env.JWT_SECRET);
     return {
       userId
     }
@@ -42,7 +45,7 @@ const context = ({ req, res }) => {
 
   const schema = makeExecutableSchema({
     typeDefs:[authTypes,userTypes,quoteTypes],
-    resolvers:lodash.merge(userResolvers,authResolver),
+    resolvers:lodash.merge(userResolvers,authResolver,quoteResolver),
   });
   
     const server = new ApolloServer({schema});
