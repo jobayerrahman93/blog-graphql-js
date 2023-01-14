@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-
+import jwt from 'jsonwebtoken';
 import User from '../../mongoose/model/User.js';
 
 
@@ -26,7 +26,25 @@ export const resolvers = {
         };
     },
 
-   
+    signIn:async(_,{signInUser})=>{
+      const user = await User.findOne({email:signInUser.email});
+
+      if(!user){
+        throw new Error('User doesnot exist with that email')
+      }
+
+      const matched = await bcrypt.compare(signInUser.password,user.password);
+
+      if(!matched){
+        throw new Error('email or password doesnt match')
+      }
+
+    const token =  jwt.sign({userId:user._id},process.env.JWT_SECRET);
+
+    return{
+      token
+    }
+    },
   
     }
   };

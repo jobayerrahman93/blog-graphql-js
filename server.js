@@ -28,7 +28,7 @@ mongoose.connect(process.env.mongo_uri);
 
 // middleware
 const context = ({ req, res }) => {
-  console.log(req.headers)
+  // console.log(req.headers)
   const {authorization}= req.headers;
   console.log(authorization);
 

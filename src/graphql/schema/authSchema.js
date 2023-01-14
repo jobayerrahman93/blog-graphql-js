@@ -1,6 +1,6 @@
 export const typeDefs =`
 type Mutation {
-   
+  signIn(signInUser:signInInput):Token
     signUp(signUpUser:signUpInput!):successfulSignUp
 }
 
@@ -14,6 +14,15 @@ input signUpInput{
     lastName:String
     email:String
     password:String
+}
+
+input signInInput{
+  email:String
+  password:String
+}
+
+type Token{
+  token:String
 }
 
 `
