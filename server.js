@@ -26,6 +26,20 @@ mongoose.connect(process.env.mongo_uri);
 
 
 
+// middleware
+const context = ({ req, res }) => {
+  console.log(req.headers)
+  const {authorization}= req.headers;
+  console.log(authorization);
+
+  if(authorization){
+    const {userId} = jwt.verify(authorization,JWT_SECRET);
+    return {
+      userId
+    }
+  }
+}
+
   const schema = makeExecutableSchema({
     typeDefs:[authTypes,userTypes,quoteTypes],
     resolvers:lodash.merge(userResolvers,authResolver),
@@ -35,6 +49,7 @@ mongoose.connect(process.env.mongo_uri);
   
     const { url } = await startStandaloneServer(server, {
       listen: { port: 4000 },
+      context
       
     
     });
