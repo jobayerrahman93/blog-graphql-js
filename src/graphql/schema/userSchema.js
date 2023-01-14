@@ -1,6 +1,7 @@
 export const typeDefs=`
 type Query {
     users: [User]
+    getUserById(_id:ID!): User
   }
 
   type User{
