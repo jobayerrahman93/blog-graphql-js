@@ -2,7 +2,11 @@ import Quote from "../../mongoose/model/Quotes.js";
 
 
 export const resolvers = {
-
+  Query: {
+      
+    quotes:async() => await Quote.find({}),
+    
+  },
     Mutation:{
 
     createQuote:async(_,{name},{userId})=>{
