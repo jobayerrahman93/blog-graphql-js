@@ -5,7 +5,7 @@ export const resolvers = {
   Query: {
       
     quotes:async() => await Quote.find({}),
-    
+    getQuotesByUserId:async(_,{by})=> await Quote.find({by}).populate("by","_id firstName"),
   },
     Mutation:{
 

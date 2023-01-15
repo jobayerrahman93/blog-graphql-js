@@ -13,7 +13,6 @@ import { typeDefs as quoteTypes } from './src/graphql/schema/quoteSchema.js';
 import { typeDefs as userTypes } from './src/graphql/schema/userSchema.js';
 dotenv.config().config;
 
-console.log(process.env.MONGO_URI);
 
 // mongoose connection start
 
@@ -31,9 +30,9 @@ mongoose.connect(process.env.mongo_uri);
 
 // middleware
 const context = ({ req, res }) => {
-  // console.log(req.headers)
+
   const {authorization}= req.headers;
-  console.log(authorization);
+
 
   if(authorization){
     const {userId} = jwt.verify(authorization,process.env.JWT_SECRET);

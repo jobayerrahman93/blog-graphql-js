@@ -19,7 +19,7 @@ export const resolvers = {
         });
 
         const result = await newUser.save();
-        console.log(result);
+        
         return {
           success:true,
           message: 'Signup Successful'
